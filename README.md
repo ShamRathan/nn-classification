@@ -13,25 +13,81 @@ In their existing market, the sales team has classified all customers into 4 seg
 You are required to help the manager to predict the right group of the new customers.
 
 ## Neural Network Model
+![image](https://github.com/ShamRathan/nn-classification/assets/93587823/aaeabbb2-0c88-487f-8506-59680bff4ccf)
 
-Include the neural network model diagram.
 
 ## DESIGN STEPS
 
 ### STEP 1:
+Import the necessary packages & modules
 
 ### STEP 2:
-
+Load and read the dataset
 ### STEP 3:
-Write your own steps
+Perform pre processing and clean the dataset
+### STEP 4:
+Encode categorical value into numerical values using ordinal/label/one hot encoding
+### STEP 5:
+Visualize the data using different plots in seaborn
+### STEP 6:
+Normalize the values and split the values for x and y
+### STEP 7:
+Build the deep learning model with appropriate layers and depth
+### STEP 8:
+Analyze the model using different metrics
+### STEP 9:
+Plot a graph for Training Loss, Validation Loss Vs Iteration & for Accuracy, Validation Accuracy vs Iteration
+### STEP 10:
+Save the model using pickle
+### STEP 11:
+Using the DL model predict for some random inputs
 
 ## PROGRAM
+```
+Developed by: Sham Rathan S
+Register Num: 212221230093
+```
+### Import Libraries:
+```
 
-Include your code here
+```
 
-## Dataset Information
+### Read the data & Pre Process:
+```
 
-Include screenshot of the dataset
+```
+### Encoding categorical values:
+```
+
+```
+### Data Visualization:
+```
+
+```
+### Assign X and Y values:
+```
+
+```
+### Building Model:
+```
+
+```
+### Analyze the model - Metrics:
+```
+
+```
+### Saving the model:
+```
+
+```
+
+### Sample Predicition:
+```
+
+```
+## Dataset Information:
+
+
 
 ## OUTPUT
 
@@ -50,6 +106,7 @@ Include confusion matrix here
 
 ### New Sample Data Prediction
 
-Include your sample input and output here
 
-## RESULT
+## RESULT:
+A neural network classification model is developed for the given dataset.
+
