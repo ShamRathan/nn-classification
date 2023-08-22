@@ -49,12 +49,46 @@ Register Num: 212221230093
 ```
 ### Import Libraries:
 ```
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
 
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import LabelEncoder
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.preprocessing import OrdinalEncoder
+
+from sklearn.metrics import classification_report as report
+from sklearn.metrics import accuracy_score as acc
+from sklearn.metrics import confusion_matrix as conf
+
+import tensorflow as tf
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.models import load_model
+from tensorflow.keras.layers import Dense
+from tensorflow.keras.layers import Dropout
+from tensorflow.keras.layers import BatchNormalization
+from tensorflow.keras.callbacks import EarlyStopping
 ```
 
 ### Read the data & Pre Process:
 ```
+df = pd.read_csv("./customers.csv")
 
+df.columns
+df.dtypes
+df.shape
+df.isnull().sum()
+
+df = df.drop('ID',axis=1)
+df = df.drop('Var_1',axis=1)
+
+df_cleaned = df.dropna(axis=0)
+
+df_cleaned.isnull().sum()
+df_cleaned.shape
+df_cleaned.dtypes
 ```
 ### Encoding categorical values:
 ```
