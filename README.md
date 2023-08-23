@@ -92,15 +92,75 @@ df_cleaned.dtypes
 ```
 ### Encoding categorical values:
 ```
+df_cleaned['Gender'].unique()
+df_cleaned['Ever_Married'].unique()  
+df_cleaned['Graduated'].unique()
+df_cleaned['Profession'].unique()
+df_cleaned['Spending_Score'].unique()
+df_cleaned['Segmentation'].unique()
 
+
+categories_list=[['Male', 'Female'],['No', 'Yes'],
+                 ['No', 'Yes'],['Healthcare', 'Engineer',
+                 'Lawyer','Artist', 'Doctor','Homemaker',
+                 'Entertainment', 'Marketing', 'Executive'],
+                 ['Low', 'Average', 'High']]
+
+enc = OrdinalEncoder(categories=categories_list)
+
+df1 = df_cleaned.copy()
+
+df1[['Gender','Ever_Married',
+     'Graduated','Profession',
+     'Spending_Score']] = enc.fit_transform(df1[['Gender',
+     						'Ever_Married','Graduated',
+                            'Profession','Spending_Score']])
+df1
+df1.dtypes
+
+le = LabelEncoder()
+df1['Segmentation'] = le.fit_transform(df1['Segmentation'])
+
+df1.dtypes
 ```
 ### Data Visualization:
 ```
+corr = df1.corr()
 
+sns.heatmap(corr, 
+            xticklabels=corr.columns,
+            yticklabels=corr.columns,
+            cmap="BuPu",
+            annot= True)
+
+sns.distplot(df1['Age'])
+
+plt.figure(figsize=(10,6))
+sns.scatterplot(x='Family_Size',y='Age',data=df1)
 ```
 ### Assign X and Y values:
 ```
+scale = MinMaxScaler()
+scale.fit(df1[["Age"]]) # Fetching Age column alone
+df1[["Age"]] = scale.transform(df1[["Age"]])
 
+df1.describe()
+
+df1['Segmentation'].unique()
+
+x = df1[['Gender','Ever_Married','Age','Graduated',
+		 'Profession','Work_Experience','Spending_Score',
+         'Family_Size']].values
+         
+y1 = df1[['Segmentation']].values
+
+ohe = OneHotEncoder()
+ohe.fit(y1)
+
+y = ohe.transform(y1).toarray()
+
+from sklearn.model_selection import train_test_split
+x_train,x_test,y_train,y_test = train_test_split(x,y,test_size=1/3,random_state=50)
 ```
 ### Building Model:
 ```
