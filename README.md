@@ -164,43 +164,98 @@ x_train,x_test,y_train,y_test = train_test_split(x,y,test_size=1/3,random_state=
 ```
 ### Building Model:
 ```
+ai_brain = Sequential([Dense(25,input_shape = [8]),
+                 Dense(20,activation="relu"),
+                 Dense(15,activation="relu"),
+                 Dense(10,activation="relu"),
+                 Dense(4,activation="softmax")])
+ai.compile(optimizer='adam',
+           loss='categorical_crossentropy',
+           metrics=['accuracy'])
 
+early_stop = EarlyStopping(
+    monitor='val_loss',
+    mode='max', 
+    verbose=1, 
+    patience=20)
+    
+ai.fit( x = x_train, y = y_train,
+        epochs=500, batch_size=256,
+        validation_data=(x_test,y_test),
+        callbacks = [early_stop]
+        )
 ```
 ### Analyze the model - Metrics:
 ```
+metrics = pd.DataFrame(ai.history.history)
+metrics.head()
 
+metrics[['loss','val_loss']].plot()
+
+metrics[['accuracy','val_accuracy']].plot()
+
+x_pred = np.argmax(ai.predict(x_test), axis=1)
+x_pred.shape
+
+y_truevalue = np.argmax(y_test,axis=1)
+y_truevalue.shape
+
+conf(y_truevalue,x_pred)
+
+print(report(y_truevalue,x_pred))
 ```
 ### Saving the model:
 ```
+import pickle
 
+# Saving the Model
+ai.save('customer_classification_model.h5')
+     
+# Saving the data
+with open('customer_data.pickle', 'wb') as fh:
+   pickle.dump([x_train,y_train,x_test,y_test,df1,df_cleaned,scale,enc,ohe,le], fh)
+     
+# Loading the Model
+ai_brain = load_model('customer_classification_model.h5')
+     
+# Loading the data
+with open('customer_data.pickle', 'rb') as fh:
+   [x_train,y_train,x_test,y_test,df1,df_cleaned,scale,enc,ohe,le]=pickle.load(fh)
 ```
 
 ### Sample Predicition:
 ```
+x_prediction = np.argmax(ai_brain.predict(x_test[1:2,:]), axis=1)
 
+print(x_prediction)
+
+print(le.inverse_transform(x_prediction))
 ```
 ## Dataset Information:
 
+![image](https://github.com/ShamRathan/nn-classification/assets/93587823/b3c11020-7d32-46a6-85ce-8a425da76400)
 
 
 ## OUTPUT
 
 ### Training Loss, Validation Loss Vs Iteration Plot
+![image](https://github.com/ShamRathan/nn-classification/assets/93587823/15d14124-c409-45a6-a074-e6da76f56364)
+### Accuracy, Validation Accuracy Vs Iteration:
+![image](https://github.com/ShamRathan/nn-classification/assets/93587823/13f62ec2-d954-4d61-b70a-922730081035)
 
-Include your plot here
 
 ### Classification Report
+![image](https://github.com/ShamRathan/nn-classification/assets/93587823/eacb2c67-8ff5-433c-8379-7e04ae75fdbd)
 
-Include Classification Report here
 
 ### Confusion Matrix
-
-Include confusion matrix here
+![image](https://github.com/ShamRathan/nn-classification/assets/93587823/bc00b509-a342-4afe-b3ae-7c747f0e5b0f)
 
 
 ### New Sample Data Prediction
+![image](https://github.com/ShamRathan/nn-classification/assets/93587823/b5419c85-1b74-415e-8cd7-d811c6aa4153)
 
 
 ## RESULT:
-A neural network classification model is developed for the given dataset.
+A neural network classification model is developed sucessfully for the given dataset.
 
